@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import createSelector from 'reselect';
+import { createSelector } from 'reselect';
 
 let lastId = 0;
 
@@ -38,4 +38,4 @@ export const reserVationsSelector = createSelector(
 );
 
 export const { reservationAdded, reservationDeleted } = reservationSlice;
-export default reservationSlice.actions;
+export default reservationSlice.reducer;

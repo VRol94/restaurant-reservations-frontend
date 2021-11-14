@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import './utils/css/blueprint.css';
-import './utils/css/index.css';
 
 ReactDOM.render(
   <React.StrictMode>

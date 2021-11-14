@@ -4,6 +4,12 @@ import { useDispatch } from 'react-redux';
 import { reservationAdded } from '../utils/redux/store/reservations';
 import FormAlert from './FormAlert';
 import useReservation from '../utils/custom-hooks/useReservation';
+import styled from 'styled-components';
+
+const CreateReservationsWrapper = styled.div`
+  position: relative;
+  width: 25%;
+`;
 
 const CreateReservations = () => {
   const [reservationToCreate, setReservationToCreate] = useReservation();
@@ -38,7 +44,7 @@ const CreateReservations = () => {
   };
 
   return (
-    <div className="create-reservation">
+    <CreateReservationsWrapper>
       <ReservationsForm
         formName={'Create Reservations'}
         handleClick={submitCreateReservation}
@@ -49,7 +55,7 @@ const CreateReservations = () => {
         isOpenReservationFormError={isOpenReservationFormError}
         handleReservationFormErrorClose={handleReservationFormErrorClose}
       />
-    </div>
+    </CreateReservationsWrapper>
   );
 };
 

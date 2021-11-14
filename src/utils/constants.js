@@ -8,20 +8,20 @@ export const initReservationData = {
 export const initialState = [
   {
     id: 0,
-    name: 'Roland',
+    name: 'Yoshi',
     date: `${new Date().toDateString()} ${new Date().toLocaleTimeString(
       'en-US'
     )}`,
     guestNr: 10,
-    email: 'rolandvincze94@gmail.com'
+    email: 'yoshi@gmail.com'
   },
   {
     id: 1,
-    name: 'Netti',
+    name: 'Crystal',
     date: `${new Date().toDateString()} ${new Date().toLocaleTimeString(
       'en-US'
     )}`,
     guestNr: 50,
-    email: 'vnetti2001@yahoo.com'
+    email: 'crystal@yahoo.com'
   }
 ];

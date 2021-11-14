@@ -137,7 +137,11 @@ const Reservations = () => {
 
   return (
     <>
-      <Table2 numRows={reservations.length} className={Classes.DARK}>
+      <Table2
+        numRows={reservations.length}
+        className={Classes.DARK}
+        columnWidths={[250, 250, 250, 250, 250, 250]}
+      >
         {cellRenderers.map(cellRenderer => (
           <Column
             key={cellRenderer.columnNr}

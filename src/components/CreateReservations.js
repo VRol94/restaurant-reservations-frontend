@@ -38,7 +38,7 @@ const CreateReservations = () => {
   };
 
   return (
-    <>
+    <div className="create-reservation">
       <ReservationsForm
         formName={'Create Reservations'}
         handleClick={submitCreateReservation}
@@ -49,7 +49,7 @@ const CreateReservations = () => {
         isOpenReservationFormError={isOpenReservationFormError}
         handleReservationFormErrorClose={handleReservationFormErrorClose}
       />
-    </>
+    </div>
   );
 };
 

@@ -11,18 +11,20 @@ const reduxStore = configureStore();
 
 function App() {
   return (
-    <Provider store={reduxStore}>
-      <BrowserRouter>
-        <div>
-          <Navigation />
-          <Routes>
-            <Route exact path="/" element={<Home />} />
-            <Route path="/reslist" element={<Reservations />} />
-            <Route path="/createres" element={<CreateReservations />} />
-          </Routes>
-        </div>
-      </BrowserRouter>
-    </Provider>
+    <div className="general-page">
+      <Provider store={reduxStore}>
+        <BrowserRouter>
+          <div>
+            <Navigation />
+            <Routes>
+              <Route exact path="/" element={<Home />} />
+              <Route path="/reslist" element={<Reservations />} />
+              <Route path="/createres" element={<CreateReservations />} />
+            </Routes>
+          </div>
+        </BrowserRouter>
+      </Provider>
+    </div>
   );
 }
 

@@ -1,7 +1,6 @@
 import React from 'react';
-import { Button, Card, Elevation } from '@blueprintjs/core';
+import { Button, Card, Elevation, Classes } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
-// import { DatePicker } from '@blueprintjs/datetime';
 import FormElement from './FormElement';
 
 const ReservationsForm = ({
@@ -11,7 +10,7 @@ const ReservationsForm = ({
   handleDataChange
 }) => {
   return (
-    <Card interactive={true} elevation={Elevation.TWO}>
+    <Card interactive={true} elevation={Elevation.TWO} className={Classes.DARK}>
       <h1>{formName}</h1>
       <FormElement
         label={'Reserver Name'}
@@ -19,7 +18,8 @@ const ReservationsForm = ({
         required={'(required)'}
         value={reservationData.name}
         handleDataChange={handleDataChange}
-        placeholder="Type the full name of the person who realizes the reservation"
+        placeholder="Type the reserver name"
+        type="text"
       />
       <FormElement
         label={'Reservation Date and Time'}
@@ -34,7 +34,8 @@ const ReservationsForm = ({
         required={'(required)'}
         value={reservationData.guestNr}
         handleDataChange={handleDataChange}
-        placeholder="Type the number of guests here"
+        placeholder="Type the nr of guests"
+        type="number"
       />
       <FormElement
         label={'Email'}
@@ -42,12 +43,13 @@ const ReservationsForm = ({
         required={''}
         value={reservationData.email}
         handleDataChange={handleDataChange}
-        placeholder="Type your email here"
+        placeholder="Type your email"
+        type="email"
       />
       <Button
         onClick={() => handleClick()}
         type="submit"
-        className="bp3-intent-primary"
+        className={Classes.INTENT_PRIMARY}
       >
         Submit
       </Button>

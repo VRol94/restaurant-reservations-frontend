@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormGroup, InputGroup } from '@blueprintjs/core';
+import { FormGroup, Classes } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 import { DatePicker } from '@blueprintjs/datetime';
 
@@ -9,15 +9,18 @@ const FormElement = ({
   required,
   value,
   placeholder,
-  handleDataChange
+  handleDataChange,
+  type
 }) => {
   const formControl =
     id !== 'date' ? (
-      <InputGroup
+      <input
+        className={Classes.INPUT}
         id={id}
         value={value}
         placeholder={placeholder}
         onChange={handleDataChange}
+        type={type}
       />
     ) : (
       <DatePicker
@@ -41,7 +44,8 @@ FormElement.propTypes = {
   required: PropTypes.string.isRequired,
   value: PropTypes.any.isRequired,
   placeholder: PropTypes.string,
-  handleDataChange: PropTypes.func.isRequired
+  handleDataChange: PropTypes.func.isRequired,
+  type: PropTypes.string
 };
 
 export default FormElement;

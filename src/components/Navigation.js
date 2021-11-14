@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Navbar, Alignment, Button } from '@blueprintjs/core';
+import { Navbar, Alignment, Button, Classes } from '@blueprintjs/core';
 
 const Navigation = () => {
   return (
-    <Navbar>
+    <Navbar className={Classes.DARK}>
       <Navbar.Group align={Alignment.LEFT}>
         <Navbar.Heading>Restaurant Reservations</Navbar.Heading>
         <Navbar.Divider />

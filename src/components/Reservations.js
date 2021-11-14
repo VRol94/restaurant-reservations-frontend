@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Icon, Alert, Intent, Dialog } from '@blueprintjs/core';
+import { Icon, Alert, Intent, Dialog, Classes } from '@blueprintjs/core';
 import { Column, Table2, Cell } from '@blueprintjs/table';
 import { useSelector } from 'react-redux';
 import { reservationsSelector } from '../utils/redux/store/reservations';
@@ -137,7 +137,7 @@ const Reservations = () => {
 
   return (
     <>
-      <Table2 numRows={reservations.length}>
+      <Table2 numRows={reservations.length} className={Classes.DARK}>
         {cellRenderers.map(cellRenderer => (
           <Column
             key={cellRenderer.columnNr}

@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createSelector } from 'reselect';
+import { initialState } from '../../constants';
 
-let lastId = 0;
+let lastId = 2;
 
 const reservationSlice = createSlice({
   name: 'reservations',
-  initialState: [],
+  initialState,
   reducers: {
     reservationAdded: (reservations, action) => {
       reservations.push({
@@ -18,24 +19,26 @@ const reservationSlice = createSlice({
     },
 
     reservationDeleted: (reservations, action) => {
-      reservations = reservations.filter(
-        reservation => reservation.id !== action.payload.id
+      const reservationId = reservations.findIndex(
+        reservation => reservation.id === action.payload.id
       );
+      reservations.splice(reservationId, 1);
     },
 
     reservationUpdated: (reservations, action) => {
-      const reservationIndex = reservations.findIndex(
+      const reservationId = reservations.findIndex(
         reservation => reservation.id === action.payload.id
       );
-      reservations[reservationIndex] = action.payload;
+      reservations[reservationId] = action.payload;
     }
   }
 });
 
-export const reserVationsSelector = createSelector(
+export const reservationsSelector = createSelector(
   state => state.reservations,
   reservations => reservations
 );
 
-export const { reservationAdded, reservationDeleted } = reservationSlice;
+export const { reservationAdded, reservationDeleted, reservationUpdated } =
+  reservationSlice.actions;
 export default reservationSlice.reducer;

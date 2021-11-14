@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import ReservationsForm from './ReservationsFrom';
 import { useDispatch } from 'react-redux';
 import { reservationAdded } from '../utils/redux/store/reservations';
-import { initReservationData } from '../utils/constants';
 import FormAlert from './FormAlert';
+import useReservation from '../utils/custom-hooks/useReservation';
 
 const CreateReservations = () => {
-  const [reservationToCreate, setReservationToCreate] =
-    useState(initReservationData);
+  const [reservationToCreate, setReservationToCreate] = useReservation();
   const [isOpenReservationFormError, setOpenReservationFormError] =
     useState(false);
   const dispatch = useDispatch();
@@ -22,23 +21,14 @@ const CreateReservations = () => {
           )}`
         })
       );
-      setReservationToCreate({ ...initReservationData });
+      setReservationToCreate();
     } else {
       setOpenReservationFormError(true);
     }
   };
 
   const changeReservationData = event => {
-    //if the event.target is undefined set the date, else set the others
-    (event.target ?? undefined) !== undefined
-      ? setReservationToCreate(previousState => ({
-          ...previousState,
-          [event.target.id]: event.target.value
-        }))
-      : setReservationToCreate(previousState => ({
-          ...previousState,
-          date: event
-        }));
+    setReservationToCreate({ event });
   };
 
   const handleReservationFormErrorClose = () => {

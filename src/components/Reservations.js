@@ -9,12 +9,11 @@ import {
   reservationUpdated
 } from '../utils/redux/store/reservations';
 import ReservationsForm from './ReservationsFrom';
-import { initReservationData } from '../utils/constants';
 import FormAlert from './FormAlert';
+import useReservation from '../utils/custom-hooks/useReservation';
 
 const Reservations = () => {
-  const [reservationToUpdate, setReservationToUpdate] =
-    useState(initReservationData);
+  const [reservationToUpdate, setReservationToUpdate] = useReservation();
   const [reservationIdToDelete, setReservationIdToDelete] = useState(0);
   const [openDeleteReservation, setOpenCloseDeleteReservation] =
     useState(false);
@@ -27,8 +26,10 @@ const Reservations = () => {
   const openReservationEdit = event => {
     const reservationIndex = Number(event.currentTarget.getAttribute('index'));
     setReservationToUpdate({
-      ...reservations[reservationIndex],
-      date: new Date(Date.parse(reservations[reservationIndex].date))
+      reservation: {
+        ...reservations[reservationIndex],
+        date: new Date(Date.parse(reservations[reservationIndex].date))
+      }
     });
     setOpenUpdateReservation(openUpdateReservation => !openUpdateReservation);
   };
@@ -38,16 +39,7 @@ const Reservations = () => {
   };
 
   const changeReservationToUpdate = event => {
-    // if the event.target is undefined set the date, else set the others
-    (event.target ?? undefined) !== undefined
-      ? setReservationToUpdate(previousState => ({
-          ...previousState,
-          [event.target.id]: event.target.value
-        }))
-      : setReservationToUpdate(previousState => ({
-          ...previousState,
-          date: event
-        }));
+    setReservationToUpdate({ event });
   };
 
   const updateReservation = () => {
@@ -60,7 +52,7 @@ const Reservations = () => {
           )}`
         })
       );
-      setReservationToUpdate(initReservationData);
+      setReservationToUpdate();
       closeReservationEdit();
     } else {
       setOpenReservationFormError(true);
@@ -93,7 +85,7 @@ const Reservations = () => {
       openReservationFormError => !openReservationFormError
     );
   };
-
+  // set up the columns which to render in the table
   const cellRenderers = [
     {
       columnNr: 0,

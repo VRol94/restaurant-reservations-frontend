@@ -1,16 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Icon, Alert, Intent, Dialog, Classes } from '@blueprintjs/core';
 import { Column, Table2, Cell } from '@blueprintjs/table';
 import { useSelector } from 'react-redux';
-import { reservationsSelector } from '../utils/redux/store/reservations';
-import { useDispatch } from 'react-redux';
 import {
-  reservationDeleted,
-  reservationUpdated
+  loadReservations,
+  reservationsSelector,
+  changeReservation,
+  deleteReservation
 } from '../utils/redux/store/reservations';
+import { useDispatch } from 'react-redux';
 import ReservationsForm from './ReservationsFrom';
 import FormAlert from './FormAlert';
 import useReservation from '../utils/custom-hooks/useReservation';
+import {
+  reservationToDelete,
+  editReservation,
+  reservationsData
+} from '../utils/constants';
+import { print } from 'graphql';
 
 const Reservations = () => {
   const [reservationToUpdate, setReservationToUpdate] = useReservation();
@@ -22,6 +29,18 @@ const Reservations = () => {
     useState(false);
   const reservations = useSelector(reservationsSelector);
   const dispatch = useDispatch();
+
+  const loadReservationsOnScreen = () => {
+    dispatch(
+      loadReservations({
+        query: reservationsData
+      })
+    );
+  };
+
+  useEffect(() => {
+    loadReservationsOnScreen();
+  }, []);
 
   const openReservationEdit = event => {
     const reservationIndex = Number(event.currentTarget.getAttribute('index'));
@@ -45,11 +64,15 @@ const Reservations = () => {
   const updateReservation = () => {
     if (reservationToUpdate.name !== '' && reservationToUpdate.guestNr !== '') {
       dispatch(
-        reservationUpdated({
-          ...reservationToUpdate,
-          date: `${reservationToUpdate.date.toDateString()} ${reservationToUpdate.date.toLocaleTimeString(
-            'en-US'
-          )}`
+        changeReservation({
+          query: print(editReservation),
+          variables: {
+            id: Number(reservationToUpdate.id),
+            name: reservationToUpdate.name,
+            date: String(reservationToUpdate.date),
+            guestNr: Number(reservationToUpdate.guestNr),
+            email: reservationToUpdate.email
+          }
         })
       );
       setReservationToUpdate();
@@ -76,7 +99,14 @@ const Reservations = () => {
   };
 
   const handleReservationDelete = () => {
-    dispatch(reservationDeleted({ id: reservationIdToDelete }));
+    dispatch(
+      deleteReservation({
+        query: print(reservationToDelete),
+        variables: {
+          id: reservationIdToDelete
+        }
+      })
+    );
     closeReservationDelete();
   };
 

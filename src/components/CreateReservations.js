@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import ReservationsForm from './ReservationsFrom';
 import { useDispatch } from 'react-redux';
-import { reservationAdded } from '../utils/redux/store/reservations';
+import { addReservation } from '../utils/redux/store/reservations';
 import FormAlert from './FormAlert';
 import useReservation from '../utils/custom-hooks/useReservation';
 import styled from 'styled-components';
+import { print } from 'graphql';
+import { createReservation } from '../utils/constants';
 
 const CreateReservationsWrapper = styled.div`
   position: relative;
@@ -20,11 +22,18 @@ const CreateReservations = () => {
   const submitCreateReservation = () => {
     if (reservationToCreate.name !== '' && reservationToCreate.guestNr !== '') {
       dispatch(
-        reservationAdded({
-          ...reservationToCreate,
-          date: `${reservationToCreate.date.toDateString()} ${reservationToCreate.date.toLocaleTimeString(
-            'en-US'
-          )}`
+        addReservation({
+          query: print(createReservation),
+          variables: {
+            name: reservationToCreate.name,
+            date: String(
+              reservationToCreate.date.toDateString() +
+                ' ' +
+                reservationToCreate.date.toLocaleTimeString('en-US')
+            ),
+            guestNr: Number(reservationToCreate.guestNr),
+            email: reservationToCreate.email
+          }
         })
       );
       setReservationToCreate();
